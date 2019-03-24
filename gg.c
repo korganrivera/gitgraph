@@ -31,13 +31,40 @@
 #define ROWS 7
 #define COLS 48
 
+typedef {
+    long long unsigned timestamp;
+    double value;
+} data;
+
 void year_loop(unsigned m);
 
 int main(int argc, char **argv){
+
     unsigned graph[ROWS][COLS];
     unsigned i, j;
 
     srand(time(NULL));
+
+    // some dummy data for testing with.
+    data array[10];
+
+    // initialise fake data.
+    array[9].timestamp = time(NULL) / 86400 * 86400;
+    array[i].value = rand() % 100;
+    for(i = 8; i >= 0; i--){
+        array[i].timestamp = array[i + 1].timestamp - 86400;
+        array[i].value = rand() % 100;
+    }
+
+    // set graph using data.
+    for(i = 0; i < ROWS; i++){
+        for(j = 0; j < COLS; j++){
+            if()
+        }
+    }
+
+
+
 
     // initialise graph with darkest color
     for(i = 0; i < ROWS; i++){
