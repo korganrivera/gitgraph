@@ -106,6 +106,8 @@ int main(int argc, char **argv){
         index--;
     }
 
+    free(data);
+
     // set heat for each day of the week.
     // sum values for each weekday.
     for(i = 0; i < 7; i++){
