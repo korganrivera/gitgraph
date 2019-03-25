@@ -1,5 +1,4 @@
 # gg: gitgraph
-
 Generates a heatmap in the terminal that's similar to Github's contributions graph.
 
 ## Description
@@ -11,7 +10,7 @@ The graphics are UTF-8 characters that I'm just going to pretend are strings to 
 
 ![screenshot](gitgraph.png)
 
-## TO-DO
-Currently uses dummy data from array in source code. Needs to get data from a file.
+## Notes
+Added a simple script that uses Sed and Awk to grab two columns (timestamp and TSS) from silvercheetah's tss.log, then passes that via a temp file to gg. This is a specific-use case that isn't really part of gg's core function, but that's what I'm using it for personally. It might be more convenient if gg could accept piped data though. Might do that later.
 
 [1]: https://github.com/korganrivera/silvercheetah

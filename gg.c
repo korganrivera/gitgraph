@@ -4,6 +4,11 @@
    * make code less ugly.
    * get data from a file instead of an array.
    * get it to work with cyclecoach.
+   *
+   * I can use sed and awk to get the data I want like this:
+   *
+   * awk '{print $1, $6}' ../silvercheetah/tss.log | sed 1d
+   * should gg be able to handle piped data?
  */
 #include <stdio.h>
 #include <stdlib.h>
