@@ -6,10 +6,9 @@
    * get it to work with cyclecoach.
  */
 #include <stdio.h>
+#include <stdlib.h>
 #include <time.h>
 #include <math.h>
-
-#define M 48
 
 typedef struct {
     time_t ts;
@@ -18,62 +17,49 @@ typedef struct {
 
 void year_loop(unsigned m);
 
-int main(void){
+int main(int argc, char **argv){
     unsigned graph[7][48]; // contains digit 0-3 to indicate colour.
     unsigned left[7];      // indicates heat of each day of week.
-    char *colour[] = {"░","▒","▓","█"};
-    unsigned i, j;
+    char c, *colour[] = {"░","▒","▓","█"};
+    unsigned i, j, M;
+    FILE *fp;
+    _data *data;
 
-    _data data[M] = {
-        { 1549298690, 12.54  },
-        { 1549378095, 19.249 },
-        { 1549471626, 17.9   },
-        { 1549566316, 21.092 },
-        { 1549670308, 25.234 },
-        { 1549670400, 0.000  },
-        { 1549756800, 0.000  },
-        { 1549905412, 7.987  },
-        { 1549991837, 19.504 },
-        { 1550080712, 18.104 },
-        { 1550102400, 0.000  },
-        { 1550261354, 16.859 },
-        { 1550275200, 0.000  },
-        { 1550361600, 0.000  },
-        { 1550448000, 0.000  },
-        { 1550534400, 0.000  },
-        { 1550620800, 0.000  },
-        { 1550707200, 0.000  },
-        { 1550793600, 0.000  },
-        { 1550941338, 14.791 },
-        { 1551026562, 14.839 },
-        { 1551117097, 17.103 },
-        { 1551139200, 0.000  },
-        { 1551225600, 0.000  },
-        { 1551312000, 0.000  },
-        { 1551398400, 0.000  },
-        { 1551484800, 0.000  },
-        { 1551571200, 0.000  },
-        { 1551657600, 0.000  },
-        { 1551744000, 0.000  },
-        { 1551830400, 0.000  },
-        { 1551916800, 0.000  },
-        { 1552083556, 34.376 },
-        { 1552089600, 0.000  },
-        { 1552176000, 0.000  },
-        { 1552262400, 0.000  },
-        { 1552348800, 0.000  },
-        { 1552435200, 0.000  },
-        { 1552603881, 12.978 },
-        { 1552679349, 16.006 },
-        { 1552752597, 17.105 },
-        { 1552780800, 0.000  },
-        { 1552875565, 16.415 },
-        { 1552953600, 0.000  },
-        { 1553040000, 0.000  },
-        { 1553126400, 0.000  },
-        { 1553212800, 0.000  },
-        { 1553299200, 0.000  }
-    };
+    // check argc.
+    if(argc != 2){
+        printf("USAGE: %s <csv file>\nfile should have two columns where the first"
+             " is timestamps and the second is some float value.\n", argv[0]);
+        exit(0);
+    }
+
+    // open file.
+    if((fp = fopen(argv[1], "r")) == NULL){
+        printf("can't open %s\n", argv[1]);
+        exit(1);
+    }
+
+    // count lines in file.
+    M = 0;
+    while((c = fgetc(fp)) != EOF)
+        if(c == '\n')
+            M++;
+    rewind(fp);
+
+    // if file is empty, we're done.
+    if(M == 0){
+        puts("file is empty :/");
+        fclose(fp);
+        exit(0);
+    }
+
+    // otherwise, malloc some space.
+    if((data = malloc(M * sizeof(_data))) == NULL){ puts("malloc failed"); exit(1); }
+
+    // read file into array.
+    for(i = 0; i < M; i++){
+        fscanf(fp, "%llu %lf", &data[i].ts, &data[i].value);
+    }
+    fclose(fp);
 
     // find max value in data[].value
     double max = data[0].value;
