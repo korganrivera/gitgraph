@@ -9,6 +9,10 @@
    *
    * awk '{print $1, $6}' ../silvercheetah/tss.log | sed 1d
    * should gg be able to handle piped data?
+   *
+   * might be an error. tried using gg_sed.sh and it went all weird.
+   * have'nt solved that yet. had problem with last timestamp in temp.
+   * maybe when it's too close to today?
  */
 #include <stdio.h>
 #include <stdlib.h>
@@ -25,7 +29,7 @@ void year_loop(unsigned m);
 int main(int argc, char **argv){
     unsigned graph[7][48]; // contains digit 0-3 to indicate colour.
     unsigned left[7];      // indicates heat of each day of week.
-    char c, *colour[] = {"░","▒","▓","█"};
+    char c, *colour[] = {"░","▒","▓","█", " "};
     unsigned i, j, M;
     FILE *fp;
     _data *data;
@@ -91,9 +95,10 @@ int main(int argc, char **argv){
     for(j = 47; ; j--){
         for(i = row_start; ; i--){
             graph[i][j] = ceil(data[index].value / (max / 3));
-            if(index == 0 || i == 0)
+            if(index == 0 || i == 0){
+                row_start = 6;
                 break;
-            row_start = 6;
+            }
             index--;
         }
         if(index == 0 || j == 0)
@@ -120,6 +125,10 @@ int main(int argc, char **argv){
     for(i = 0; i < 7; i++){
         left[i] = ceil(left[i] / (u_max / 3));
     }
+
+    // blank out future days.
+    for(i = dow + 1; i < 7; i++)
+        graph[i][47] = 4;
 
     // display the month on top.
     year_loop(mon);
