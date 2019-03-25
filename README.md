@@ -11,4 +11,7 @@ The graphics are UTF-8 characters that I'm just going to pretend are strings to 
 
 ![screenshot](gitgraph.png)
 
+## TO-DO
+Currently uses dummy data from array in source code. Needs to get data from a file.
+
 [1]: https://github.com/korganrivera/silvercheetah
