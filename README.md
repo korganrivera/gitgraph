@@ -11,6 +11,6 @@ The graphics are UTF-8 characters that I'm just going to pretend are strings to 
 ![screenshot](gitgraph.png)
 
 ## Notes
-Added a simple script that uses Sed and Awk to grab two columns (timestamp and TSS) from silvercheetah's tss.log, then passes that via a temp file to gg. This is a specific-use case that isn't really part of gg's core function, but that's what I'm using it for personally. It might be more convenient if gg could accept piped data though. Might do that later.
+It might be more convenient if gg could accept piped data. Might do that later.
 
 [1]: https://github.com/korganrivera/silvercheetah
