@@ -132,6 +132,7 @@ int main(int argc, char **argv){
     for(i = dow + 1; i < 7; i++)
         graph[i][47] = 4;
 
+    putchar('\n');
     // display the month on top.
     year_loop(mon);
 
@@ -157,6 +158,7 @@ int main(int argc, char **argv){
         }
         putchar('\n');
     }
+    putchar('\n');
 }
 
 // Given a month index, will print a year of months beginning with that month.
