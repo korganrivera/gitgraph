@@ -10,6 +10,10 @@ The graphics are UTF-8 characters that I'm just going to pretend are strings to 
 
 ![screenshot](gitgraph.png)
 
+## Conky
+I've added a conky script to the repo so you can have this:
+![conky](conky.png)
+
 ## Notes
 It might be more convenient if gg could accept piped data. Might do that later.
 
