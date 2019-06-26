@@ -1,18 +1,11 @@
 /* Display timestamp and value table as a github-style heatmap.
    Still to do:
-   * make month heatmap on top.
    * make code less ugly.
-   * get data from a file instead of an array.
-   * get it to work with cyclecoach.
    *
    * I can use sed and awk to get the data I want like this:
    *
    * awk '{print $1, $6}' ../silvercheetah/tss.log | sed 1d
    * should gg be able to handle piped data?
-   *
-   * might be an error. tried using gg_sed.sh and it went all weird.
-   * have'nt solved that yet. had problem with last timestamp in temp.
-   * maybe when it's too close to today?
  */
 #include <stdio.h>
 #include <stdlib.h>
