@@ -20,7 +20,7 @@ typedef struct {
 void year_loop(unsigned m);
 
 int main(int argc, char **argv){
-    unsigned graph[7][48]; // contains digit 0-3 to indicate colour.
+    unsigned graph[7][48]; // contains digit 0-4 to indicate colour.
     unsigned left[7];      // indicates heat of each day of week.
     char c, *colour[] = {"░","▒","▓","█", " "};
     unsigned i, j, M;
@@ -41,10 +41,13 @@ int main(int argc, char **argv){
     }
 
     // count lines in file.
+    // I think this fails if last line in file doesn't end with a newline :/
     M = 0;
-    while((c = fgetc(fp)) != EOF)
+    while(!feof(fp)){
+        c = fgetc(fp);
         if(c == '\n')
             M++;
+    }
     rewind(fp);
 
     // if file is empty, we're done.
@@ -59,7 +62,10 @@ int main(int argc, char **argv){
 
     // read file into array.
     for(i = 0; i < M; i++){
-        fscanf(fp, "%llu %lf", &data[i].ts, &data[i].value);
+        if((fscanf(fp, "%llu %lf", &data[i].ts, &data[i].value)) != 2){
+            printf("\nproblem reading the file. :/");
+            exit(1);
+       }
     }
     fclose(fp);
 
@@ -70,9 +76,8 @@ int main(int argc, char **argv){
             max = data[i].value;
     }
 
-    //  initialise graph.
+    //  initialise graph[].
     for(i = 0; i < 7; i++){
-        left[i] = 0;
         for(j = 0; j < 48; j++){
             graph[i][j] = 0;
         }
@@ -85,9 +90,10 @@ int main(int argc, char **argv){
     // set graph value.
     unsigned index = M - 1;
     unsigned row_start = dow;
+    double divisor = max / 3;
     for(j = 47; ; j--){
         for(i = row_start; ; i--){
-            graph[i][j] = ceil(data[index].value / (max / 3));
+            graph[i][j] = ceil(data[index].value / divisor);
             if(index == 0 || i == 0){
                 row_start = 6;
                 break;
@@ -104,6 +110,7 @@ int main(int argc, char **argv){
     // set heat for each day of the week.
     // sum values for each weekday.
     for(i = 0; i < 7; i++){
+        left[i] = 0;
         for(j = 0; j < 48; j++){
             left[i] += graph[i][j];
         }
@@ -117,8 +124,9 @@ int main(int argc, char **argv){
     }
 
     // set left[]'s correct value.
+    divisor = u_max / 3;
     for(i = 0; i < 7; i++){
-        left[i] = ceil(left[i] / (u_max / 3));
+        left[i] = ceil(left[i] / divisor);
     }
 
     // blank out future days.
@@ -161,6 +169,7 @@ void year_loop(unsigned m){
 
     printf("      ");
     unsigned i, index = 4 * (m + 1);
+//  printf(&(year_loop[index]));
     for(i = index; i < 48; i++){
         putchar(year_loop[i]);
     }
