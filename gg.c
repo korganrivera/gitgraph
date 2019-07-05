@@ -124,9 +124,11 @@ int main(int argc, char **argv){
     }
 
     // set left[]'s correct value.
-    divisor = u_max / 3;
     for(i = 0; i < 7; i++){
-        left[i] = ceil(left[i] / divisor);
+        if(u_max)
+            left[i] = 3 * left[i] / u_max;
+        else
+            left[i] = 0;
     }
 
     // blank out future days.
