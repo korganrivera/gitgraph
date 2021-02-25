@@ -23,7 +23,7 @@ int main(int argc, char **argv){
     unsigned graph[7][48]; // contains digit 0-4 to indicate colour.
     unsigned left[7];      // indicates heat of each day of week.
     char c, *colour[] = {"░","▒","▓","█", " "};
-    unsigned i, j, M;
+    unsigned i, j, M;      // i, j are loop variables. M is line count.
     FILE *fp;
     _data *data;
 
@@ -135,7 +135,6 @@ int main(int argc, char **argv){
     for(i = dow + 1; i < 7; i++)
         graph[i][47] = 4;
 
-//    putchar('\n');
     // display the month on top.
     year_loop(mon);
 
