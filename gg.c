@@ -140,9 +140,8 @@ int main(int argc, char **argv){
     // sum values for each week of the year.
     for(i = 0; i < 48; i++){
         top[i] = 0;
-        for(j = 0; j < 7; j++){
+        for(j = 0; j < 7; j++)
             top[i] += graph[j][i];
-        }
     }
 
     // find highest sum.
